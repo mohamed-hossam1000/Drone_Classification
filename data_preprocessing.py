@@ -1,6 +1,8 @@
 from torchvision import datasets, transforms
 import torch
 from torch.utils.data import DataLoader, random_split
+from PIL import Image
+import numpy as np
 
 transform = transforms.Compose([transforms.Resize((224, 224)),
                     transforms.ToTensor(),
@@ -23,7 +25,24 @@ def split_dataloader(data,train_split):
     
     return trainL,valL
 
-def preprocess_image(image):
-    preprocessed_image = transform(image)
 
-    return preprocess_image
+def preprocess_image(image_np):
+    transform = transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                            std=[0.229, 0.224, 0.225])
+    ])
+
+    # Convert numpy array to PIL Image
+    if isinstance(image_np, np.ndarray):
+        image = Image.fromarray(image_np.astype('uint8'))
+    else:
+        raise TypeError("Input must be a numpy array")
+
+    image = transform(image)
+
+    # Add batch dimension → (1, C, H, W)
+    image = image.unsqueeze(0)
+
+    return image
