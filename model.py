@@ -62,56 +62,58 @@ def get_loss_function():
 # # 🟢 PART 2 — TRAINING (YOUR FRIEND)
 # # =========================================
 
-# def train_one_epoch(model, dataloader, optimizer, criterion, device):
-#     model.train()
-#     running_loss = 0.0
-#     correct = 0
+def train_one_epoch(model, dataloader, optimizer, criterion, device):
+    model.train()
+    running_loss = 0.0
+    correct = 0
 
-#     for images, labels in dataloader:
-#         images = images.to(device)
-#         labels = labels.to(device)
+    for images, labels in dataloader:
+        images = images.to(device)
+        labels = labels.to(device)
 
-#         optimizer.zero_grad()
-#         outputs = model(images)
-#         loss = criterion(outputs, labels)
+        optimizer.zero_grad()
+        outputs = model(images)
+        loss = criterion(outputs, labels)
 
-#         loss.backward()
-#         optimizer.step()
+        loss.backward()
+        optimizer.step()
 
-#         running_loss += loss.item()
+        running_loss += loss.item()
 
-#         _, preds = torch.max(outputs, 1)
-#         correct += torch.sum(preds == labels)
+        _, preds = torch.max(outputs, 1)
+        correct += torch.sum(preds == labels)
 
-#     epoch_loss = running_loss / len(dataloader)
-#     epoch_acc = correct.double() / len(dataloader.dataset)
+    epoch_loss = running_loss / len(dataloader)
+    epoch_acc = correct.double() / len(dataloader.dataset)
 
-#     return epoch_loss, epoch_acc.item()
-
-
-# def validate(model, dataloader, criterion, device):
-#     model.eval()
-#     running_loss = 0.0
-#     correct = 0
-
-#     with torch.no_grad():
-#         for images, labels in dataloader:
-#             images = images.to(device)
-#             labels = labels.to(device)
-
-#             outputs = model(images)
-#             loss = criterion(outputs, labels)
-
-#             running_loss += loss.item()
-
-#             _, preds = torch.max(outputs, 1)
-#             correct += torch.sum(preds == labels)
-
-#     val_loss = running_loss / len(dataloader)
-#     val_acc = correct.double() / len(dataloader.dataset)
-
-#     return val_loss, val_acc.item()
+    return epoch_loss, epoch_acc.item()
 
 
-# def save_model(model, path="resnet50_model.pth"):
-#     torch.save(model.state_dict(), path)
+def validate(model, dataloader, criterion, device):
+    model.eval()
+    running_loss = 0.0
+    correct = 0
+
+    with torch.no_grad():
+        for images, labels in dataloader:
+            images = images.to(device)
+            labels = labels.to(device)
+
+            outputs = model(images)
+            loss = criterion(outputs, labels)
+
+            running_loss += loss.item()
+
+            _, preds = torch.max(outputs, 1)
+            correct += torch.sum(preds == labels)
+
+    val_loss = running_loss / len(dataloader)
+    val_acc = correct.double() / len(dataloader.dataset)
+
+    return val_loss, val_acc.item()
+
+
+def save_model(model, path="resnet50_model.pth"):
+    torch.save(model.state_dict(), path)
+    
+print ("Model architecture and training functions defined successfully!")   
