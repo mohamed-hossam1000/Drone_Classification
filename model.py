@@ -2,11 +2,6 @@ import torch
 import torch.nn as nn
 import torchvision.models as models
 
-
-# =========================================
-# 🔵 PART 1 — MODEL ARCHITECTURE (MARAM)
-# =========================================
-
 def build_model(num_classes=3, device="cuda"):
     """
     Build ResNet50 model and replace final layer
