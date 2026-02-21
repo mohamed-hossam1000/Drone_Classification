@@ -2,13 +2,12 @@ from torchvision import datasets, transforms
 import torch
 from torch.utils.data import DataLoader, random_split
 
+transform = transforms.Compose([transforms.Resize((224, 224)),
+                    transforms.ToTensor(),
+                    transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                    std=[0.229, 0.224, 0.225])])
 
 def load_data(data_dir):
-    # Transforms to apply on the data
-    transform = transforms.Compose([transforms.Resize((224, 224)),
-                        transforms.ToTensor(),
-                        transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                        std=[0.229, 0.224, 0.225])])
     # Loading the dataset and applying transforms
     dataset = datasets.ImageFolder(data_dir, transform=transform)
 
@@ -23,3 +22,8 @@ def split_dataloader(data,train_split):
     valL = DataLoader(val_data, batch_size=64, shuffle=False)
     
     return trainL,valL
+
+def preprocess_image(image):
+    preprocessed_image = transform(image)
+
+    return preprocess_image
