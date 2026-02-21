@@ -3,10 +3,6 @@ import torch.nn as nn
 import torchvision.models as models
 
 
-# =========================================
-# 🔵 PART 1 — MODEL ARCHITECTURE (MARAM)
-# =========================================
-
 def build_model(num_classes=3, device="cuda"):
     """
     Build ResNet50 model and replace final layer
@@ -58,9 +54,6 @@ def get_loss_function():
     return nn.CrossEntropyLoss()
 
 
-# # =========================================
-# # 🟢 PART 2 — TRAINING (YOUR FRIEND)
-# # =========================================
 
 def train_one_epoch(model, dataloader, optimizer, criterion, device):
     model.train()
